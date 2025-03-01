@@ -90,7 +90,7 @@ const Propuler_Product = () => {
                                         <MdRemoveRedEye size={25} />
                                     </Link>
                                     <Link
-                                        to={"update_coffee"}
+                                        to={`/update_coffee/${coffee._id}`}
                                         className="bg-[#3C393B] w-10 h-10 flex justify-center items-center text-white rounded">
                                         <MdEdit size={25} />
                                     </Link>

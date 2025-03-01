@@ -31,8 +31,8 @@ export const router = createBrowserRouter([
                 element:<Addnewcoffee></Addnewcoffee>
             },
             {
-                path:"/update_coffee",
-                element:<UpdateCoffee></UpdateCoffee>
+                path:"/update_coffee/:id",
+                element:<UpdateCoffee></UpdateCoffee>,
             },
             {
                 path:"/coffee/:id",
