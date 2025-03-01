@@ -5,6 +5,10 @@ const UpdateCoffee = () => {
      useEffect(() => {
             window.scrollTo(0, 0);
         }, []);
+
+        const handleUpdate = (e) =>{
+            e.preventDefault();
+        }
         
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
@@ -22,7 +26,7 @@ const UpdateCoffee = () => {
             </p>
 
             {/* Form */}
-            <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <form onSubmit={handleUpdate}  className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label className="block fontRailway text-gray-700">Name</label>
                     <input type="text" required placeholder="Enter coffee name" className="input w-full fontRailway border border-[#E3B577] rounded-md" />
@@ -54,7 +58,7 @@ const UpdateCoffee = () => {
 
                 {/* Submit Button */}
                 <div className="col-span-1 md:col-span-2 flex justify-center">
-                    <button className="bg-[#c49a6c] w-full text-[#331A15] px-6 py-2 rounded-md hover:bg-[#a67c52] transition">
+                    <button  className="bg-[#c49a6c] w-full text-[#331A15] px-6 py-2 rounded-md hover:bg-[#a67c52] transition">
                     Update Coffee Details
                     </button>
                 </div>

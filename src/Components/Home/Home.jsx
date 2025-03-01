@@ -7,6 +7,7 @@ import Propuler_Product from './Propuler_Product/Propuler_Product';
 const Home = () => {
     return (
         <div>
+    
             <div>
                 <Banner></Banner>
             </div>

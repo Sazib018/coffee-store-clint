@@ -88,7 +88,7 @@ const Footer = () => {
                             ></textarea>
                             <button
                                 type="submit"
-                                className="btn border-2 border-[#331A15] text-2xl text-[#331A15] font-normal rounded-[30px] hover:bg-[#331A15] hover:text-white hover:border-chocolate"
+                                className="btn border-2 border-[#331A15] text-2xl text-[#331A15] font-normal rounded-[30px] hover:bg-[#331A15] hover:text-[#E3B577]  hover:border-chocolate"
                             >
                                 Send Message
                             </button>
