@@ -36,6 +36,11 @@ const Login = () => {
           >
             Login
           </button>
+          <button 
+          className="w-full fontRailway bg-[#9c5e1c] text-white p-2 rounded mt-4"
+        >
+          Login with Google
+        </button>
         </form>
         <p className="text-center fontRailway text-gray-600 mt-4">
           Don’t Have An Account?{" "}

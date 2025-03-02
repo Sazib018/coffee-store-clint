@@ -27,7 +27,7 @@ const UpdateCoffee = () => {
         const category = form.category.value;
         const details = form.details.value;
         const price = form.price.value;
-        const photo_url = form.photoUrl.value;
+        const photo_url= form.photoUrl.value;
 
         const coffeeData = {
             name,
