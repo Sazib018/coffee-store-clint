@@ -7,36 +7,42 @@ import UpdateCoffee from "../Pages/UpdateCoffee/UpdateCoffee";
 import Coffee_Details from "../Pages/Coffee_details/Coffee_Details";
 import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
+import Users from "../Pages/Users/Users";
 
 export const router = createBrowserRouter([
     {
-        path:"/",
-        element:<Mainlayouts></Mainlayouts>,
-        errorElement:<Error></Error>,
-        children:[
+        path: "/",
+        element: <Mainlayouts></Mainlayouts>,
+        errorElement: <Error></Error>,
+        children: [
             {
-                path:"/",
-                element:<Home></Home>
+                path: "/",
+                element: <Home></Home>
             },
             {
-                path:"/login",
-                element:<Login></Login>
+                path: "/login",
+                element: <Login></Login>
             },
             {
-                path:"/register",
-                element:<Register></Register>
+                path: "/register",
+                element: <Register></Register>
             },
             {
-                path:"/add_new_coffee",
-                element:<Addnewcoffee></Addnewcoffee>
+                path: "/users",
+                element: <Users></Users>,
+                loader: () => fetch('http://localhost:3000/users')
             },
             {
-                path:"/update_coffee/:id",
-                element:<UpdateCoffee></UpdateCoffee>,
+                path: "/add_new_coffee",
+                element: <Addnewcoffee></Addnewcoffee>
             },
             {
-                path:"/coffee/:id",
-                element:<Coffee_Details></Coffee_Details>,
+                path: "/update_coffee/:id",
+                element: <UpdateCoffee></UpdateCoffee>,
+            },
+            {
+                path: "/coffee/:id",
+                element: <Coffee_Details></Coffee_Details>,
                 loader: ({ params }) => fetch(`http://localhost:3000/coffee/${params.id}`)
             },
         ]

@@ -4,6 +4,8 @@ import { AuthContext } from '../../Providers/AuthProvider';
 import { useNavigate } from 'react-router-dom';
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import { FcGoogle } from "react-icons/fc";
+import Swal from 'sweetalert2';
+import { updateProfile } from "firebase/auth";
 
 const Register = () => {
     const { register, handleSubmit } = useForm();
@@ -17,27 +19,44 @@ const Register = () => {
     const onSubmit = (data) => {
         setLoading(true);
         createUser(data.email, data.password)
-            .then(userInfo => {
-                console.log(userInfo.user);
+            .then((userInfo) => {
+                const user = userInfo.user;
 
-
+                return updateProfile(user, {
+                    displayName: data.name,
+                    photoURL: data.photoURL,
+                });
             })
-            .then(res => res.json())
             .then(() => {
+                const userForDB = {
+                    displayName: data.name,
+                    email: data.email,
+                    creationTime: new Date().toISOString(),
+                };
+
+                return fetch("http://localhost:3000/users", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(userForDB),
+                });
+            })
+            .then(() => {
+                Swal.fire({ title: "Registration Successful", icon: "success" });
+                setLoading(false);
                 navigate("/login");
             })
-            .catch(error => {
-             console.log(error);
-             
+            .catch((error) => {
+                console.error("Error:", error);
+                setLoading(false);
             });
     };
 
     const handleGoogleLogin = () => {
         googleSignIn()
-            .then(userInfo => {
+            .then((userInfo) => {
                 console.log(userInfo.user);
             })
-            .catch(err => {
+            .catch((err) => {
                 console.error(err.message);
             });
     };
@@ -104,13 +123,16 @@ const Register = () => {
 
                     <button
                         type="submit"
-                        className="w-full fontRailway bg-[#c49a6c] text-white py-2 rounded-lg hover:bg-[#7c6247] transition" >
-                        Register
+                        className="w-full fontRailway bg-[#c49a6c] text-white py-2 rounded-lg hover:bg-[#7c6247] transition"
+                        disabled={loading}
+                    >
+                        {loading ? "Registering..." : "Register"}
                     </button>
                 </form>
                 <button
                     onClick={handleGoogleLogin}
-                    className="w-full fontRailway bg-white border border-gray-300 text-gray-700 flex items-center justify-center gap-2 p-2 rounded-lg mt-4 hover:bg-gray-200" >
+                    className="w-full fontRailway bg-white border border-gray-300 text-gray-700 flex items-center justify-center gap-2 p-2 rounded-lg mt-4 hover:bg-gray-200"
+                >
                     <FcGoogle size={22} /> Login with Google
                 </button>
             </div>

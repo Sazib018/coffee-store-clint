@@ -13,7 +13,23 @@ const Login = () => {
 
     logIn(data.email, data.password)
       .then((userInfo) => {
-        console.log("User Logged In:", userInfo.user);
+        console.log(userInfo.user);
+        const userForDB = {
+          email: userInfo.user.email,
+          lastSignInTime: userInfo.user.metadata.lastSignInTime
+        }
+        fetch('http://localhost:3000/users', {
+          method: "PATCH",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(userForDB)
+        })
+          .then(res => res.json())
+          .then(data => {
+            console.log(data);
+
+          })
       })
       .catch((err) => {
         setError(err.message);
