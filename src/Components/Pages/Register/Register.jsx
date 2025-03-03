@@ -7,30 +7,38 @@ import { FcGoogle } from "react-icons/fc";
 
 const Register = () => {
     const { register, handleSubmit } = useForm();
-    const { createUser, googleSignIn } = useContext(AuthContext); 
+    const { createUser, googleSignIn } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const [showPassword, setShowPassword] = useState(false);
     const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const onSubmit = (data) => {
+        setLoading(true);
         createUser(data.email, data.password)
             .then(userInfo => {
-                console.log("User registered:", userInfo.user);
+                console.log(userInfo.user);
+
+
+            })
+            .then(res => res.json())
+            .then(() => {
                 navigate("/login");
             })
             .catch(error => {
-                console.error("Registration Error:", error.message);
+             console.log(error);
+             
             });
     };
 
     const handleGoogleLogin = () => {
         googleSignIn()
-            .then((userInfo) => {
+            .then(userInfo => {
                 console.log(userInfo.user);
             })
-            .catch((err) => {
-                console.error("Google Login Error:", err.message);
+            .catch(err => {
+                console.error(err.message);
             });
     };
 
@@ -96,14 +104,14 @@ const Register = () => {
 
                     <button
                         type="submit"
-                        className="w-full fontRailway bg-[#c49a6c] hover:bg-[#5b452d] text-white py-2 rounded-lg" >
+                        className="w-full fontRailway bg-[#c49a6c] text-white py-2 rounded-lg hover:bg-[#7c6247] transition" >
                         Register
                     </button>
                 </form>
                 <button
                     onClick={handleGoogleLogin}
                     className="w-full fontRailway bg-white border border-gray-300 text-gray-700 flex items-center justify-center gap-2 p-2 rounded-lg mt-4 hover:bg-gray-200" >
-                    <FcGoogle size={22}></FcGoogle> Login with Google
+                    <FcGoogle size={22} /> Login with Google
                 </button>
             </div>
         </div>
