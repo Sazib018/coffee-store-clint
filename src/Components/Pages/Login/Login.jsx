@@ -2,14 +2,15 @@ import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
 import { useForm } from "react-hook-form";
+import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
   const { logIn, googleSignIn } = useContext(AuthContext);
-  const [ setError] = useState("");
+  const [setError] = useState("");
 
   const onSubmit = (data) => {
-  
+
     logIn(data.email, data.password)
       .then((userInfo) => {
         console.log("User Logged In:", userInfo.user);
@@ -20,10 +21,10 @@ const Login = () => {
   };
 
   const handleGoogleLogin = () => {
-   
+
     googleSignIn()
       .then((userInfo) => {
-        console.log( userInfo.user);
+        console.log(userInfo.user);
       })
       .catch((err) => {
         setError(err.message);
@@ -44,7 +45,7 @@ const Login = () => {
               Email address
             </label>
             <input
-              type="email" {...register("email")} 
+              type="email" {...register("email")}
               placeholder="Enter your email address"
               className="w-full fontRailway px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400"
               required
@@ -55,7 +56,7 @@ const Login = () => {
               Password
             </label>
             <input
-              type="password" {...register("password")} 
+              type="password" {...register("password")}
               placeholder="Enter your password"
               className="w-full fontRailway px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400"
               required
@@ -71,9 +72,8 @@ const Login = () => {
 
         <button
           onClick={handleGoogleLogin}
-          className="w-full fontRailway bg-[#9c5e1c] text-white p-2 rounded mt-4"
-        >
-          Login with Google
+          className="w-full fontRailway bg-white border border-gray-300 text-gray-700 flex items-center justify-center gap-2 p-2 rounded-lg mt-4 hover:bg-gray-200" >
+          <FcGoogle size={22}></FcGoogle> Login with Google
         </button>
 
         <p className="text-center fontRailway text-gray-600 mt-4">

@@ -3,23 +3,34 @@ import { useForm } from 'react-hook-form';
 import { AuthContext } from '../../Providers/AuthProvider';
 import { useNavigate } from 'react-router-dom';
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
+import { FcGoogle } from "react-icons/fc";
 
 const Register = () => {
     const { register, handleSubmit } = useForm();
-    const { createUser } = useContext(AuthContext);
+    const { createUser, googleSignIn } = useContext(AuthContext); 
     const navigate = useNavigate();
 
     const [showPassword, setShowPassword] = useState(false);
-    const [password, setPassword] = useState(""); 
+    const [password, setPassword] = useState("");
 
     const onSubmit = (data) => {
-        createUser(data.email, data.password) 
+        createUser(data.email, data.password)
             .then(userInfo => {
                 console.log("User registered:", userInfo.user);
                 navigate("/login");
             })
             .catch(error => {
                 console.error("Registration Error:", error.message);
+            });
+    };
+
+    const handleGoogleLogin = () => {
+        googleSignIn()
+            .then((userInfo) => {
+                console.log(userInfo.user);
+            })
+            .catch((err) => {
+                console.error("Google Login Error:", err.message);
             });
     };
 
@@ -46,7 +57,7 @@ const Register = () => {
                             Photo URL
                         </label>
                         <input
-                            type="text" required {...register("photoURL")} 
+                            type="text" required {...register("photoURL")}
                             placeholder="Enter your photo URL"
                             className="w-full fontRailway px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400"
                         />
@@ -61,7 +72,7 @@ const Register = () => {
                             className="w-full fontRailway px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400"
                         />
                     </div>
-                    
+
                     <div className="mb-4 relative">
                         <label className="block fontRailway text-gray-700">Password:</label>
                         <div className="relative">
@@ -85,11 +96,15 @@ const Register = () => {
 
                     <button
                         type="submit"
-                        className="w-full fontRailway bg-[#c49a6c] hover:bg-[#5b452d] text-white py-2 rounded-lg"
-                    >
+                        className="w-full fontRailway bg-[#c49a6c] hover:bg-[#5b452d] text-white py-2 rounded-lg" >
                         Register
                     </button>
                 </form>
+                <button
+                    onClick={handleGoogleLogin}
+                    className="w-full fontRailway bg-white border border-gray-300 text-gray-700 flex items-center justify-center gap-2 p-2 rounded-lg mt-4 hover:bg-gray-200" >
+                    <FcGoogle size={22}></FcGoogle> Login with Google
+                </button>
             </div>
         </div>
     );
