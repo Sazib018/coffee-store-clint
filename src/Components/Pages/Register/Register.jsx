@@ -18,20 +18,23 @@ const Register = () => {
 
     const onSubmit = (data) => {
         setLoading(true);
+        let createdUser = null; 
+
         createUser(data.email, data.password)
             .then((userInfo) => {
-                const user = userInfo.user;
-
-                return updateProfile(user, {
+                createdUser = userInfo.user; 
+                
+                return updateProfile(createdUser, {
                     displayName: data.name,
                     photoURL: data.photoURL,
                 });
             })
             .then(() => {
                 const userForDB = {
-                    displayName: data.name,
-                    email: data.email,
-                    creationTime: new Date().toISOString(),
+                    displayName: createdUser.displayName,
+                    email: createdUser.email,
+                    creationTime: createdUser.metadata.creationTime,
+                    lastSignInTime: createdUser.metadata.lastSignInTime
                 };
 
                 return fetch("http://localhost:3000/users", {

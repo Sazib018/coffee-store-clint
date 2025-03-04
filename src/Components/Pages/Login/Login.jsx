@@ -14,6 +14,7 @@ const Login = () => {
     logIn(data.email, data.password)
       .then((userInfo) => {
         console.log(userInfo.user);
+        
         const userForDB = {
           email: userInfo.user.email,
           lastSignInTime: userInfo.user.metadata.lastSignInTime
